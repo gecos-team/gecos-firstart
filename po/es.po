@@ -1,0 +1,30 @@
+# Spanish translations for PACKAGE package.
+# Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# AHernandez <ahernandez@emergya.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-03 13:44+0100\n"
+"PO-Revision-Date: 2012-01-03 13:44+0100\n"
+"Last-Translator: AHernandez <ahernandez@emergya.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../firstart/assistant/FirstartWindow.py:73
+msgid "First Start Assistant"
+msgstr "Asistente de primer arranque"
+
+#: ../firstart/assistant/FirstartWindow.py:75
+msgid "Test"
+msgstr "Test"
+
+#: ../firstart/assistant/FirstartWindow.py:76
+msgid "Close"
+msgstr "Cerrar"
