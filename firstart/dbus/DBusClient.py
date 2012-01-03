@@ -21,14 +21,9 @@ __copyright__ = "Copyright (C) 2011, Junta de Andalucía <devmaster@guadalinex.o
 __license__ = "GPL-2"
 
 
-from gi.repository import Gtk
 from gi.repository import GObject
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
-import time
-from multiprocessing import Process
-from multiprocessing import Queue
-from multiprocessing import Pool
 
 
 DBUS_SERVICE = 'org.guadalinex.firstart'

@@ -26,8 +26,6 @@ from firstart_lib.Window import Window
 from firstart.dbus.DBusClient import DBusClient
 import firstart_lib.config as config
 import time
-import os
-from multiprocessing import Process
 
 import gettext
 from gettext import gettext as _

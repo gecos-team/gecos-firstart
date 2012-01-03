@@ -23,10 +23,6 @@ __license__ = "GPL-2"
 
 from gi.repository import Gtk
 from dbus.DBusService import DBusService
-from multiprocessing import Process
-import shlex
-import os
-import subprocess
 from assistant.FirstartWindow import FirstartWindow
 
 
