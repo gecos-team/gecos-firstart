@@ -29,7 +29,7 @@ from gi.repository import Gtk
 import inspect
 import functools
 import logging
-logger = logging.getLogger('firstboot_lib')
+logger = logging.getLogger('firstart_lib')
 
 from xml.etree.cElementTree import ElementTree
 
