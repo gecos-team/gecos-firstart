@@ -1,0 +1,11 @@
+firstart_lib/helpers.py
+firstart_lib/Window.py
+firstart_lib/__init__.py
+firstart_lib/config.py
+firstart_lib/Builder.py
+firstart/dbus/DBusClient.py
+firstart/dbus/__init__.py
+firstart/dbus/DBusService.py
+firstart/__init__.py
+firstart/assistant/FirstartWindow.py
+firstart/assistant/__init__.py

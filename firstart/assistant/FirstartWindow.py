@@ -46,7 +46,9 @@ class FirstartWindow(Window):
         iconfile = config.get_data_file('media', '%s' % ('wizard1.png',))
         self.set_icon_from_file(iconfile)
 
+        self.ui.btnTest.set_visible(False)
         self.ui.btnClose.set_sensitive(False)
+
         #self.maximize()
         self.set_default_size(1000, 600)
 
@@ -105,7 +107,6 @@ class FirstartWindow(Window):
 
     def unblock(self):
         self.ui.btnClose.set_sensitive(True)
-        #self.ui.btnClose.set_label(_('Fuck Yeah!'))
 
     def grab(self):
         return
