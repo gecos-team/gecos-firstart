@@ -64,7 +64,7 @@ class DBusService(dbus.service.Object):
 
         # Return True for GObject timer to continue,
         # False to stop the timer.
-        return !state_changed
+        return not state_changed
 
     def set_state(self, state):
         self.state = state
