@@ -34,10 +34,10 @@ __all__ = [
 
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
-__firstboot_data_directory__ = '../data/'
+__firstart_data_directory__ = '../data/'
 __license__ = ''
 __version__ = '0.0.1'
-__firstboot_prefix__ = '/usr/local'
+__firstart_prefix__ = '/usr/local'
 
 import os
 import sys
@@ -64,19 +64,19 @@ def get_data_file(*path_segments):
     return os.path.join(get_data_path(), *path_segments)
 
 def get_prefix():
-    return __firstboot_prefix__
+    return __firstart_prefix__
 
 def get_data_path():
-    """Retrieve firstboot data path
+    """Retrieve firstart data path
 
-    This path is by default <firstboot_lib_path>/../data/ in trunk
-    and /usr/share/firstboot in an installed version but this path
+    This path is by default <firstart_lib_path>/../data/ in trunk
+    and /usr/share/firstart in an installed version but this path
     is specified at installation time.
     """
 
     # Get pathname absolute or relative.
     path = os.path.join(
-        os.path.dirname(__file__), __firstboot_data_directory__)
+        os.path.dirname(__file__), __firstart_data_directory__)
 
     abs_data_path = os.path.abspath(path)
     if not os.path.exists(abs_data_path):
