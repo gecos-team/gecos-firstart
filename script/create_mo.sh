@@ -1,7 +1,7 @@
 #!/bin/bash
 
 lang=$1
-appname="firstboot"
+appname="firstart"
 
 if [ "" == "$lang" ]; then
     lang="es"
