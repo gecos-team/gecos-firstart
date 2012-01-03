@@ -20,23 +20,3 @@ __author__ = "Antonio Hernández <ahernandez@emergya.com>"
 __copyright__ = "Copyright (C) 2011, Junta de Andalucía <devmaster@guadalinex.org>"
 __license__ = "GPL-2"
 
-
-from gi.repository import Gtk
-from dbus.DBusService import DBusService
-from multiprocessing import Process
-import shlex
-import os
-import subprocess
-from assistant.FirstartWindow import FirstartWindow
-
-
-def dbusservice():
-    s = DBusService()
-    s.start()
-    Gtk.main()
-
-
-def main():
-    w = FirstartWindow()
-    w.show()
-    Gtk.main()

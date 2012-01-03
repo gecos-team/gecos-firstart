@@ -58,8 +58,8 @@
             <property name="homogeneous">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btnPrev">
-                <property name="label" translatable="yes">Previous</property>
+              <object class="GtkButton" id="btnTest">
+                <property name="label" translatable="yes">Test</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -72,8 +72,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnNext">
-                <property name="label" translatable="yes">Next</property>
+              <object class="GtkButton" id="btnClose">
+                <property name="label" translatable="yes">Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

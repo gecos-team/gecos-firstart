@@ -72,12 +72,12 @@ def set_up_logging(opts):
 
     formatter = logging.Formatter("%(levelname)s:%(name)s: %(funcName)s() '%(message)s'")
 
-    logger = logging.getLogger('firstboot')
+    logger = logging.getLogger('firstart')
     logger_sh = logging.StreamHandler()
     logger_sh.setFormatter(formatter)
     logger.addHandler(logger_sh)
 
-    lib_logger = logging.getLogger('firstboot_lib')
+    lib_logger = logging.getLogger('firstart_lib')
     lib_logger_sh = logging.StreamHandler()
     lib_logger_sh.setFormatter(formatter)
     lib_logger.addHandler(lib_logger_sh)
