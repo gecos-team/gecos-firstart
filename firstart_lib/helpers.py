@@ -47,7 +47,7 @@ def get_builder(builder_file_name):
         ui_filename = None
 
     builder = Builder()
-    builder.set_translation_domain('firstboot')
+    builder.set_translation_domain('firstart')
     builder.add_from_file(ui_filename)
     return builder
 
@@ -96,7 +96,7 @@ def get_help_uri(page=None):
 
     if not os.path.exists(help_uri):
         # installed so use gnome help tree - user's language
-        help_uri = 'firstboot'
+        help_uri = 'firstart'
 
     # unspecified page is the index.page
     if page is not None:
