@@ -55,7 +55,6 @@ if python_path:
 
 import firstart
 from firstart_lib.config import get_prefix
-from gi.repository import Gtk
 
 if get_prefix() == '/usr/local':
     gettext.bindtextdomain('firstart', '/usr/local/share/locale')
@@ -71,4 +70,3 @@ if __name__ == '__main__':
 
     syslog.syslog('firstart :: __main__')
     firstart.dbusservice()
-    Gtk.main()

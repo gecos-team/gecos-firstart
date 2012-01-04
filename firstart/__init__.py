@@ -21,20 +21,17 @@ __copyright__ = "Copyright (C) 2011, Junta de Andalucía <devmaster@guadalinex.o
 __license__ = "GPL-2"
 
 
-from gi.repository import Gtk
-
-
 def dbusservice():
 
     from dbus.DBusService import DBusService
 
     s = DBusService()
     s.start()
-    Gtk.main()
 
 
 def main():
 
+    from gi.repository import Gtk
     from firstart_lib.FirstartEntry import FirstartEntry
     from assistant.FirstartWindow import FirstartWindow
 
