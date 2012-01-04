@@ -22,6 +22,7 @@ __license__ = "GPL-2"
 
 
 from gi.repository import Gdk
+from gi.repository import WebKit as webkit
 from firstart_lib.Window import Window
 from firstart.dbus.DBusClient import DBusClient
 import firstart_lib.config as config
@@ -31,6 +32,7 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('firstart')
 
+GUADALINEX_INFO_URI = 'file:///usr/share/guadalinex-about/index.html'
 
 DBC_STATE_STOPPED = 0
 DBC_STATE_RUNNING = 1
@@ -50,7 +52,9 @@ class FirstartWindow(Window):
         self.ui.btnClose.set_sensitive(False)
 
         #self.maximize()
-        self.set_default_size(1000, 600)
+        self.resize(1000, 700)
+
+        self.show_browser()
 
         self.dbusclient = DBusClient()
         self.dbusclient.connect('state-changed', self.on_dbusclient_state_changed)
@@ -62,6 +66,12 @@ class FirstartWindow(Window):
         except Exception as e:
             self.unblock()
 
+    def show_browser(self):
+        self.webview = webkit.WebView()
+        self.ui.scContent.add(self.webview)
+        self.webview.load_uri(GUADALINEX_INFO_URI)
+        self.webview.show()
+
     def reply_handler(self, state):
         if state == DBC_STATE_FINISHED:
             self.unblock()
@@ -70,8 +80,8 @@ class FirstartWindow(Window):
         self.unblock()
 
     def translate(self):
-        self.set_title(_('First Start Assistant'))
-        self.ui.lblDescription.set_text('')
+        self.set_title(_('Guadalinex GECOS Guide'))
+        self.ui.lblInfo.set_label(_('You can take a look at the latest news while your system is being configured ...'))
         self.ui.btnTest.set_label(_('Test'))
         self.ui.btnClose.set_label(_('Close'))
 
@@ -107,6 +117,7 @@ class FirstartWindow(Window):
 
     def unblock(self):
         self.ui.btnClose.set_sensitive(True)
+        self.ui.lblInfo.set_label(_('Your system has been configured.'))
 
     def grab(self):
         return
