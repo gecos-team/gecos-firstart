@@ -28,10 +28,6 @@ import os
 import gettext
 from gettext import gettext as _
 
-import syslog
-
-
-syslog.syslog('firstart :: start')
 
 # Add project root directory (enable symlink and trunk execution)
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
@@ -68,5 +64,4 @@ if __name__ == '__main__':
 #        sys.stdout.flush()
 #        sys.exit(1)
 
-    syslog.syslog('firstart :: __main__')
     firstart.dbusservice()
