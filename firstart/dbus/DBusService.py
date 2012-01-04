@@ -21,7 +21,6 @@ __copyright__ = "Copyright (C) 2011, Junta de Andalucía <devmaster@guadalinex.o
 __license__ = "GPL-2"
 
 
-from gi.repository import Gtk
 from gi.repository import GObject
 import dbus
 import dbus.service
@@ -42,6 +41,7 @@ class DBusService(dbus.service.Object):
 
     def __init__(self):
         self.state = STATE_STOPPED
+        self.loop = GObject.MainLoop()
 
     def start(self):
         DBusGMainLoop(set_as_default=True)
@@ -55,6 +55,8 @@ class DBusService(dbus.service.Object):
         self.process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         GObject.timeout_add_seconds(1, self.check_state)
+
+        self.loop.run()
 
     def check_state(self):
         s = self.process.poll()
@@ -72,7 +74,7 @@ class DBusService(dbus.service.Object):
 
     @dbus.service.method(DBUS_SERVICE)
     def stop(self):
-        Gtk.main_quit()
+        self.loop.quit()
 
     @dbus.service.method(DBUS_SERVICE, out_signature='i')
     def get_state(self):
