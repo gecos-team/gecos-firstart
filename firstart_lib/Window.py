@@ -67,8 +67,8 @@ class Window(Gtk.Window):
 
         self.connect("delete_event", self.on_delete_event)
 
-        self.finish_initializing(builder)
         self.translate()
+        self.finish_initializing(builder)
 
     def finish_initializing(self, builder):
         pass

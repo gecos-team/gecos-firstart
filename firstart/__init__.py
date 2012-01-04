@@ -22,17 +22,28 @@ __license__ = "GPL-2"
 
 
 from gi.repository import Gtk
-from dbus.DBusService import DBusService
-from assistant.FirstartWindow import FirstartWindow
 
 
 def dbusservice():
+
+    from dbus.DBusService import DBusService
+
     s = DBusService()
     s.start()
     Gtk.main()
 
 
 def main():
+
+    from firstart_lib.FirstartEntry import FirstartEntry
+    from assistant.FirstartWindow import FirstartWindow
+
+    entry = FirstartEntry()
+    if entry.get_firstart() == True:
+        return
+
+    entry.set_firstart(1)
+
     w = FirstartWindow()
     w.show()
     Gtk.main()
