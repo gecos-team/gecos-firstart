@@ -92,7 +92,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
                   '__version__': "'%s'" % self.distribution.get_version(),
                   '__firstart_prefix__': "'%s'" % self.prefix}
         previous_values = update_config(values)
-        update_desktop_file(self.prefix + '/share/firstart/')
+        #update_desktop_file(self.prefix + '/share/firstart/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_config(previous_values)
 
@@ -126,7 +126,7 @@ DistUtilsExtra.auto.setup(
     description='First start assistant for Guadalinex GECOS',
     url='https://github.com/ahdiaz/gecos-firstart',
 
-    keywords=['python', 'gnome'],
+    keywords=['python', 'gnome', 'guadalinex', 'gecos'],
 
     packages=[
         'firstart',
@@ -150,8 +150,9 @@ DistUtilsExtra.auto.setup(
     data_files=[
        ('share/firstart/media', glob.glob('data/media/*')),
        ('share/firstart/ui', glob.glob('data/ui/*')),
-       ('/etc/xdg/autostart/', glob.glob('data/firstart.desktop')),
-       ('/etc/init/', glob.glob('data/firstart.conf'))
+       ('/etc/xdg/autostart', glob.glob('data/firstart.desktop')),
+       ('/etc/init', glob.glob('data/firstart.conf')),
+       ('/etc/dbus-1/system.d', glob.glob('data/org.guadalinex.firstart.conf'))
     ],
 
     cmdclass={
