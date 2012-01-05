@@ -6,7 +6,7 @@ if [ 0 != `id -u` ]; then
     exit 1
 fi
 
-updatedb
+updatedb 2>/dev/null
 
 for f in `locate firstart | grep -v home | grep -v common`; do
 
@@ -17,3 +17,5 @@ for f in `locate firstart | grep -v home | grep -v common`; do
     fi;
     
 done
+
+rm -rf ~/.config/firstart
