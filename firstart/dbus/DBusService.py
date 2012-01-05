@@ -27,6 +27,7 @@ import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 import shlex
 import subprocess
+import syslog
 
 
 DBUS_SERVICE = 'org.guadalinex.firstart'
@@ -40,19 +41,25 @@ STATE_FINISHED = 2
 class DBusService(dbus.service.Object):
 
     def __init__(self):
-        self.state = STATE_STOPPED
+        self.log('Initializing DBusService...')
+        self.set_state(STATE_STOPPED)
         self.loop = GObject.MainLoop()
 
+    def log(self, message, priority=syslog.LOG_INFO):
+        syslog.syslog(priority, message)
+
     def start(self):
+        self.log('Starting DBusService for org.guadalinex.firstart ...')
         DBusGMainLoop(set_as_default=True)
         self.bus_name = dbus.service.BusName(DBUS_SERVICE, bus=dbus.SystemBus())
         dbus.service.Object.__init__(self, self.bus_name, DBUS_OBJECT_PATH)
 
-        self.state = STATE_RUNNING
-
         cmd = '/usr/bin/env chef-client'
+        self.log('Calling subprocess: ' + cmd)
         args = shlex.split(cmd)
         self.process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        self.set_state(STATE_RUNNING)
 
         GObject.timeout_add_seconds(1, self.check_state)
 
@@ -61,19 +68,46 @@ class DBusService(dbus.service.Object):
     def check_state(self):
         s = self.process.poll()
         state_changed = s != None
+
         if state_changed == True:
+
             self.set_state(STATE_FINISHED)
+
+            if s == 0:
+                self.log('The subprocess finished with exit code 0')
+
+            else:
+                (out, err) = self.process.communicate()
+                str_out = out.strip() + err.strip()
+                self.log('The subprocess finished with exit code ' + str(s))
+                self.log('Output was: ' + str_out)
 
         # Return True for GObject timer to continue,
         # False to stop the timer.
         return not state_changed
 
     def set_state(self, state):
+        if state == STATE_STOPPED:
+            str_state = 'STOPPED'
+
+        elif state == STATE_RUNNING:
+            str_state = 'RUNNING'
+
+        elif state == STATE_FINISHED:
+            str_state = 'FINISHED'
+
+        else:
+            str_state = 'UNKNOWN'
+
+        self.log('Setting DBusService state to ' + str_state)
         self.state = state
-        self.StateChanged(self.state)
+
+        if state != STATE_STOPPED:
+            self.StateChanged(self.state)
 
     @dbus.service.method(DBUS_SERVICE)
     def stop(self):
+        self.log('Stopping the DBusService for org.guadalinex.firstart')
         self.loop.quit()
 
     @dbus.service.method(DBUS_SERVICE, out_signature='i')
@@ -82,5 +116,5 @@ class DBusService(dbus.service.Object):
 
     @dbus.service.signal(DBUS_SERVICE, signature='i')
     def StateChanged(self, state):
-        #print 'StateChanged', state
+        self.log('StateChanged signal emited (state == ' + str(state) + ')')
         pass
