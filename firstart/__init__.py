@@ -23,10 +23,23 @@ __license__ = "GPL-2"
 
 def dbusservice():
 
+    import os
     from dbus.DBusService import DBusService
 
     s = DBusService()
     s.start()
+
+    try:
+        os.unlink('/etc/init/firstart.conf')
+
+    except Exception as e:
+        pass
+
+    try:
+        os.unlink('/etc/dbus-1/system.d/org.guadalinex.firstart.conf')
+
+    except Exception as e:
+        pass
 
 
 def main():
