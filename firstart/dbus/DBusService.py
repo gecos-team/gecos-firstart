@@ -71,8 +71,6 @@ class DBusService(dbus.service.Object):
 
         if state_changed == True:
 
-            self.set_state(STATE_FINISHED)
-
             if s == 0:
                 self.log('The subprocess finished with exit code 0')
 
@@ -81,6 +79,8 @@ class DBusService(dbus.service.Object):
                 str_out = out.strip() + err.strip()
                 self.log('The subprocess finished with exit code ' + str(s))
                 self.log('Output was: ' + str_out)
+
+            self.set_state(STATE_FINISHED)
 
         # Return True for GObject timer to continue,
         # False to stop the timer.
@@ -105,6 +105,9 @@ class DBusService(dbus.service.Object):
         if state != STATE_STOPPED:
             self.StateChanged(self.state)
 
+        if state == STATE_FINISHED:
+            self.stop()
+
     @dbus.service.method(DBUS_SERVICE)
     def stop(self):
         self.log('Stopping the DBusService for org.guadalinex.firstart')
@@ -117,4 +120,3 @@ class DBusService(dbus.service.Object):
     @dbus.service.signal(DBUS_SERVICE, signature='i')
     def StateChanged(self, state):
         self.log('StateChanged signal emited (state == ' + str(state) + ')')
-        pass
