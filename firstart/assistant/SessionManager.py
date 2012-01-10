@@ -56,7 +56,7 @@ class SessionManager:
             return
 
         if self.desktop_autostart_id is None:
-            log('This script is intended to be executed from xdg-autostart, \
+            self.log('This script is intended to be executed from xdg-autostart, \
 inside a gnome-session context.', syslog.LOG_ERR)
             #return False
             self.desktop_autostart_id = 0
