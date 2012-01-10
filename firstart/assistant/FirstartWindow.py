@@ -54,6 +54,7 @@ class FirstartWindow(Window):
 
         #self.maximize()
         self.resize(1000, 700)
+        #self.fullscreen()
 
         self.sm = SessionManager('gecos-firstart')
         self.sm.start()
