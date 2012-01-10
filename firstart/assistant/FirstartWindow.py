@@ -26,6 +26,7 @@ from gi.repository import WebKit as webkit
 from firstart_lib.Window import Window
 from firstart.dbus.DBusClient import DBusClient
 import firstart_lib.config as config
+from SessionManager import SessionManager
 import time
 
 import gettext
@@ -54,6 +55,8 @@ class FirstartWindow(Window):
         #self.maximize()
         self.resize(1000, 700)
 
+        self.sm = SessionManager('gecos-firstart')
+        self.sm.start()
         self.show_browser()
 
         self.dbusclient = DBusClient()
@@ -90,10 +93,12 @@ class FirstartWindow(Window):
         return False
 
     def on_btnTest_clicked(self, widget):
+        self.sm.stop()
         self.ungrab()
         self.destroy()
 
     def on_btnClose_clicked(self, widget):
+        self.sm.stop()
         self.ungrab()
         self.destroy()
 
@@ -120,18 +125,18 @@ class FirstartWindow(Window):
         self.ui.lblInfo.set_label(_('Your system has been configured.'))
 
     def grab(self):
-        return
+        #return
         w = self.get_window()
         i = 0
         while i < 10:
             i = i + 1
             r = Gdk.keyboard_grab(w, False, 0L)
-            print r
+            #print r
             if r == Gdk.GrabStatus.SUCCESS:
                 break
             time.sleep(1)
         r = Gdk.pointer_grab(w, True, 0, w, None, 0L)
-        print r
+        #print r
 
     def ungrab(self):
         r = Gdk.keyboard_ungrab(0L)
