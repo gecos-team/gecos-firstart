@@ -29,7 +29,11 @@ import syslog
 SM_DBUS_SERVICE = 'org.gnome.SessionManager'
 SM_DBUS_OBJECT_PATH = '/org/gnome/SessionManager'
 SM_DBUS_CLIENT_PRIVATE_PATH = 'org.gnome.SessionManager.ClientPrivate'
-sm_client_id = None
+
+INHIBIT_LOGGIN_OUT = 1
+INHIBIT_USER_SWITCHING = 2
+INHIBIT_SUSPENDING = 4
+INHIBIT_IDLE = 8
 
 
 class SessionManager:
@@ -57,14 +61,12 @@ inside a gnome-session context.', syslog.LOG_ERR)
             #return False
             self.desktop_autostart_id = 0
 
-        #DBusGMainLoop(set_as_default = True)
-
         session_bus = dbus.SessionBus()
         self.sm_proxy = session_bus.get_object(SM_DBUS_SERVICE, SM_DBUS_OBJECT_PATH)
 
         try:
             self.register_client()
-            #self.connect_signals()
+            self.connect_signals()
             self.inhibit()
             self.state = 1
 
@@ -100,7 +102,10 @@ inside a gnome-session context.', syslog.LOG_ERR)
         if self.inhibit_cookie != None:
             return
         m_inhibit = self.sm_proxy.get_dbus_method('Inhibit', SM_DBUS_SERVICE)
-        self.inhibit_cookie = m_inhibit(self.sm_client_name, 0, 'Reason', 4)
+        # TODO: Try to get the toplevel_xid from Gdk?, XLib?, ...
+        # and try to figure out what flag is appropiate.
+        toplevel_xid = 0
+        self.inhibit_cookie = m_inhibit(self.sm_client_name, toplevel_xid, 'Reason', INHIBIT_LOGGIN_OUT)
         self.log('Inhibit cookie: ' + str(self.inhibit_cookie))
 
     def uninhibit(self):
