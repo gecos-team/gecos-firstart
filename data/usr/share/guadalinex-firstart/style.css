@@ -1,0 +1,30 @@
+
+body {
+    background-color: #000000;
+    font-family: "DejaVu Sans", Arial, Helvetica, sans-serif;
+    font-size: 1.0em;
+    color: #FFFFFF;
+    margin: 0px;
+}
+
+div.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+div.logo {
+    width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+}
+
+div.logo img {
+    border: 0px;
+}
+
+div.text {
+    text-align: center;
+    margin-top: 40px;
+}

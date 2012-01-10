@@ -33,7 +33,9 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('firstart')
 
-GUADALINEX_INFO_URI = 'file:///usr/share/guadalinex-about/index.html'
+GECOS_INFO_URI = 'file:///usr/share/guadalinex-firstart/index.html'
+GECOS_BLOCKED_URI = 'file:///usr/share/guadalinex-firstart/block.html'
+GECOS_UNBLOCKED_URI = 'file:///usr/share/guadalinex-firstart/unblock.html'
 
 DBC_STATE_STOPPED = 0
 DBC_STATE_RUNNING = 1
@@ -73,7 +75,7 @@ class FirstartWindow(Window):
     def show_browser(self):
         self.webview = webkit.WebView()
         self.ui.scContent.add(self.webview)
-        self.webview.load_uri(GUADALINEX_INFO_URI)
+        self.webview.load_uri(GECOS_BLOCKED_URI)
         self.webview.show()
 
     def reply_handler(self, state):
