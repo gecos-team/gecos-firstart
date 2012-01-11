@@ -87,7 +87,8 @@ class FirstartWindow(Window):
 
     def translate(self):
         self.set_title(_('Guadalinex GECOS Guide'))
-        self.ui.lblInfo.set_label(_('You can take a look to the GECOS guide while your system is being configured ...'))
+        #self.ui.lblInfo.set_label(_('You can take a look to the GECOS guide while your system is being configured ...'))
+        self.ui.lblInfo.set_label(_('Please, wait while your system is being configured ...'))
         self.ui.btnTest.set_label(_('Test'))
         self.ui.btnClose.set_label(_('Close'))
 
