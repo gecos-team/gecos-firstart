@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-03 13:44+0100\n"
+"POT-Creation-Date: 2012-01-11 17:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../firstart/assistant/FirstartWindow.py:73
-msgid "First Start Assistant"
+#: ../firstart/assistant/FirstartWindow.py:83
+msgid "Guadalinex GECOS Guide"
 msgstr ""
 
-#: ../firstart/assistant/FirstartWindow.py:75
+#: ../firstart/assistant/FirstartWindow.py:85
+msgid "Please, wait while your system is being configured ..."
+msgstr ""
+
+#: ../firstart/assistant/FirstartWindow.py:86
 msgid "Test"
 msgstr ""
 
-#: ../firstart/assistant/FirstartWindow.py:76
+#: ../firstart/assistant/FirstartWindow.py:87
 msgid "Close"
+msgstr ""
+
+#: ../firstart/assistant/FirstartWindow.py:121
+msgid "Your system has been configured."
 msgstr ""
