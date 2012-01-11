@@ -33,9 +33,9 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('firstart')
 
-GECOS_INFO_URI = 'file:///usr/share/guadalinex-firstart/index.html'
-GECOS_BLOCKED_URI = 'file:///usr/share/guadalinex-firstart/block.html'
-GECOS_UNBLOCKED_URI = 'file:///usr/share/guadalinex-firstart/unblock.html'
+GECOS_INFO_URI = 'file://%s/share/guadalinex-firstart/index.html' % (config.get_prefix(),)
+GECOS_BLOCKED_URI = 'file://%s/share/guadalinex-firstart/block.html' % (config.get_prefix(),)
+GECOS_UNBLOCKED_URI = 'file://%s/share/guadalinex-firstart/unblock.html' % (config.get_prefix(),)
 
 DBC_STATE_STOPPED = 0
 DBC_STATE_RUNNING = 1
