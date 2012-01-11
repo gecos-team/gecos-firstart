@@ -62,6 +62,55 @@ def update_config(values={}):
     return oldvalues
 
 
+def update_upstart_script(values={}):
+
+    oldvalues = {}
+    try:
+        fin = file('data/etc/init/firstart.conf', 'r')
+        fout = file(fin.name + '.new', 'w')
+
+        for line in fin:
+            fields = line.split('=')  # Separate variable from value
+            if fields[0].strip() in values:
+                oldvalues[fields[0].strip()] = fields[1].strip()
+                line = "%s=%s\n" % (fields[0], values[fields[0].strip()])
+            fout.write(line)
+
+        fout.flush()
+        fout.close()
+        fin.close()
+        os.rename(fout.name, fin.name)
+    except (OSError, IOError), e:
+        print ("ERROR: Can't find data/etc/init/firstart.conf.in")
+        sys.exit(1)
+    return oldvalues
+
+
+def update_autostart_script(values={}):
+
+    oldvalues = {}
+    try:
+        fin = file('data/etc/xdg/autostart/firstart.desktop', 'r')
+        fout = file(fin.name + '.new', 'w')
+
+        for line in fin:
+            for key in values:
+                if key in line:
+                    value = values[key].replace("'", '')
+                    oldvalues[value] = key
+                    line = line.replace(key, value)
+            fout.write(line)
+
+        fout.flush()
+        fout.close()
+        fin.close()
+        os.rename(fout.name, fin.name)
+    except (OSError, IOError), e:
+        print ("ERROR: Can't find data/etc/xdg/autostart/firstart.desktop.in")
+        sys.exit(1)
+    return oldvalues
+
+
 def update_desktop_file(datadir):
 
     try:
@@ -93,8 +142,13 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
                   '__firstart_prefix__': "'%s'" % self.prefix}
         previous_values = update_config(values)
         #update_desktop_file(self.prefix + '/share/firstart/')
+        upstart_bak = update_upstart_script(values)
+        autostart_bak = update_autostart_script(values)
+
         DistUtilsExtra.auto.install_auto.run(self)
         update_config(previous_values)
+        update_upstart_script(upstart_bak)
+        update_autostart_script(autostart_bak)
 
 
 class Clean(Command):
@@ -119,12 +173,12 @@ class Clean(Command):
 
 DistUtilsExtra.auto.setup(
     name='firstart',
-    version='0.0.1',
+    version='0.0.2',
     license='GPL-2',
     author='Antonio Hernández',
     author_email='ahernandez@emergya.com',
     description='First start assistant for Guadalinex GECOS',
-    url='https://github.com/ahdiaz/gecos-firstart',
+    url='https://github.com/gecos-team/gecos-firstart',
 
     keywords=['python', 'gnome', 'guadalinex', 'gecos'],
 
@@ -150,9 +204,10 @@ DistUtilsExtra.auto.setup(
     data_files=[
        ('share/firstart/media', glob.glob('data/media/*')),
        ('share/firstart/ui', glob.glob('data/ui/*')),
-       ('/etc/xdg/autostart', glob.glob('data/firstart.desktop')),
-       ('/etc/init', glob.glob('data/firstart.conf')),
-       ('/etc/dbus-1/system.d', glob.glob('data/org.guadalinex.firstart.conf'))
+       ('share/guadalinex-firstart', glob.glob('data/usr/share/guadalinex-firstart/*')),
+       ('/etc/xdg/autostart', glob.glob('data/etc/xdg/autostart/firstart.desktop')),
+       ('/etc/init', glob.glob('data/etc/init/firstart.conf')),
+       ('/etc/dbus-1/system.d', glob.glob('data/etc/dbus-1/system.d/org.guadalinex.firstart.conf'))
     ],
 
     cmdclass={

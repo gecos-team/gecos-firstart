@@ -35,7 +35,6 @@ __all__ = [
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
 __firstart_data_directory__ = '../data/'
-__license__ = ''
 __version__ = '0.0.1'
 __firstart_prefix__ = '/usr/local'
 

@@ -26,13 +26,16 @@ from gi.repository import WebKit as webkit
 from firstart_lib.Window import Window
 from firstart.dbus.DBusClient import DBusClient
 import firstart_lib.config as config
+from SessionManager import SessionManager
 import time
 
 import gettext
 from gettext import gettext as _
 gettext.textdomain('firstart')
 
-GUADALINEX_INFO_URI = 'file:///usr/share/guadalinex-about/index.html'
+GECOS_INFO_URI = 'file://%s/share/guadalinex-firstart/index.html' % (config.get_prefix(),)
+GECOS_BLOCKED_URI = 'file://%s/share/guadalinex-firstart/block.html' % (config.get_prefix(),)
+GECOS_UNBLOCKED_URI = 'file://%s/share/guadalinex-firstart/unblock.html' % (config.get_prefix(),)
 
 DBC_STATE_STOPPED = 0
 DBC_STATE_RUNNING = 1
@@ -53,7 +56,10 @@ class FirstartWindow(Window):
 
         #self.maximize()
         self.resize(1000, 700)
+        #self.fullscreen()
 
+        self.sm = SessionManager('gecos-firstart')
+        self.sm.start()
         self.show_browser()
 
         self.dbusclient = DBusClient()
@@ -69,7 +75,7 @@ class FirstartWindow(Window):
     def show_browser(self):
         self.webview = webkit.WebView()
         self.ui.scContent.add(self.webview)
-        self.webview.load_uri(GUADALINEX_INFO_URI)
+        self.webview.load_uri(GECOS_BLOCKED_URI)
         self.webview.show()
 
     def reply_handler(self, state):
@@ -90,10 +96,12 @@ class FirstartWindow(Window):
         return False
 
     def on_btnTest_clicked(self, widget):
+        self.sm.stop()
         self.ungrab()
         self.destroy()
 
     def on_btnClose_clicked(self, widget):
+        self.sm.stop()
         self.ungrab()
         self.destroy()
 
@@ -116,22 +124,23 @@ class FirstartWindow(Window):
             self.unblock()
 
     def unblock(self):
+        self.webview.load_uri(GECOS_UNBLOCKED_URI)
         self.ui.btnClose.set_sensitive(True)
         self.ui.lblInfo.set_label(_('Your system has been configured.'))
 
     def grab(self):
-        return
+        #return
         w = self.get_window()
         i = 0
         while i < 10:
             i = i + 1
             r = Gdk.keyboard_grab(w, False, 0L)
-            print r
+            #print r
             if r == Gdk.GrabStatus.SUCCESS:
                 break
             time.sleep(1)
         r = Gdk.pointer_grab(w, True, 0, w, None, 0L)
-        print r
+        #print r
 
     def ungrab(self):
         r = Gdk.keyboard_ungrab(0L)
