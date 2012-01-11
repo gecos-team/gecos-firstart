@@ -124,6 +124,7 @@ class FirstartWindow(Window):
             self.unblock()
 
     def unblock(self):
+        self.webview.load_uri(GECOS_UNBLOCKED_URI)
         self.ui.btnClose.set_sensitive(True)
         self.ui.lblInfo.set_label(_('Your system has been configured.'))
 
