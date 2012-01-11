@@ -46,8 +46,27 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'firstart'))
     python_path.insert(0, PROJECT_ROOT_DIRECTORY)
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
 
+
+def insert_paths(paths=[]):
+    for path in paths:
+        if os.path.exists(path) and path not in sys.path:
+            python_path.insert(0, path)
+            sys.path.insert(0, path)
+
+
+insert_paths([
+    '/usr/local/lib/python2.7/dist-packages',
+    '/usr/lib/python2.7/dist-packages',
+    '/usr/local/lib/python2.7/site-packages',
+    '/usr/lib/python2.7/site-packages',
+#    '/usr/local/share/pyshared',
+#    '/usr/share/pyshared'
+])
+
+
 if python_path:
     os.putenv('PYTHONPATH', "%s:%s" % (os.getenv('PYTHONPATH', ''), ':'.join(python_path))) # for subprocesses
+
 
 import firstart
 from firstart_lib.config import get_prefix
@@ -59,9 +78,5 @@ elif get_prefix() == '/usr':
 
 
 if __name__ == '__main__':
-#    if os.getuid() != 0:
-#        sys.stdout.write(_('You need to be root to run this program.'))
-#        sys.stdout.flush()
-#        sys.exit(1)
 
     firstart.dbusservice()

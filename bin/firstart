@@ -47,16 +47,22 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'firstart'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
 
 
-def insert_path(path):
-    if os.path.exists(path) and path not in sys.path:
-        python_path.insert(0, path)
-        sys.path.insert(0, path)
+def insert_paths(paths=[]):
+    for path in paths:
+        if os.path.exists(path) and path not in sys.path:
+            python_path.insert(0, path)
+            sys.path.insert(0, path)
 
 
-insert_path('/usr/local/lib/python2.7/dist-packages')
-insert_path('/usr/lib/python2.7/dist-packages')
-insert_path('/usr/local/lib/python2.7/site-packages')
-insert_path('/usr/lib/python2.7/site-packages')
+insert_paths([
+    '/usr/local/lib/python2.7/dist-packages',
+    '/usr/lib/python2.7/dist-packages',
+    '/usr/local/lib/python2.7/site-packages',
+    '/usr/lib/python2.7/site-packages',
+#    '/usr/local/share/pyshared',
+#    '/usr/share/pyshared'
+])
+
 
 if python_path:
     os.putenv('PYTHONPATH', "%s:%s" % (os.getenv('PYTHONPATH', ''), ':'.join(python_path))) # for subprocesses
@@ -69,6 +75,7 @@ if get_prefix() == '/usr/local':
     gettext.bindtextdomain('firstart', '/usr/local/share/locale')
 elif get_prefix() == '/usr':
     gettext.textdomain('firstart')
+
 
 if __name__ == '__main__':
 
