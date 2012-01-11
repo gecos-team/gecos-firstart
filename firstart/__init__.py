@@ -21,7 +21,22 @@ __copyright__ = "Copyright (C) 2011, Junta de Andalucía <devmaster@guadalinex.o
 __license__ = "GPL-2"
 
 
+def firstboot_is_running():
+    import subprocess
+
+    # Don't execute this assistant if gecos-firstboot is running
+    stdout = subprocess.Popen('/usr/bin/env pgrep firstboot', shell=True, stdout=subprocess.PIPE).stdout
+    s_pid = stdout.read().strip()
+    if len(s_pid) > 0:
+        return True
+
+    return False
+
+
 def dbusservice():
+
+    if firstboot_is_running():
+        return
 
     import os
     from dbus.DBusService import DBusService
@@ -43,6 +58,9 @@ def dbusservice():
 
 
 def main():
+
+    if firstboot_is_running():
+        return
 
     from gi.repository import Gtk
     from firstart_lib.FirstartEntry import FirstartEntry
