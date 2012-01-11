@@ -25,9 +25,6 @@ msgstr "Guía de Guadalinex GECOS"
 msgid "Please, wait while your system is being configured ..."
 msgstr "Por favor, espere mientras se configura su sistema..."
 
-#~ "Puede echar un vistazo a la guía de GECOS mientras se configura su "
-#~ "sistema ..."
-
 #: ../firstart/assistant/FirstartWindow.py:86
 msgid "Test"
 msgstr "Test"
