@@ -50,6 +50,10 @@ class DBusClient(GObject.GObject):
         self.proxy = self.bus.get_object(DBUS_SERVICE, DBUS_OBJECT_PATH)
         self.proxy.connect_to_signal('StateChanged', self.on_state_changed)
 
+    def user_login(self):
+        m_user_login = self.proxy.get_dbus_method('user_login', DBUS_SERVICE)
+        m_user_login()
+
     def get_state(self, reply_handler, error_handler):
         m_get_state = self.proxy.get_dbus_method('get_state', DBUS_SERVICE)
         state = m_get_state(reply_handler=reply_handler, error_handler=error_handler)
