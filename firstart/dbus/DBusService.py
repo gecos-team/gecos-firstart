@@ -42,7 +42,6 @@ class DBusService(dbus.service.Object):
 
     def __init__(self):
         self.log('Initializing DBusService...')
-        self.set_state(STATE_STOPPED)
         self.loop = GObject.MainLoop()
 
     def log(self, message, priority=syslog.LOG_INFO):
@@ -53,6 +52,12 @@ class DBusService(dbus.service.Object):
         DBusGMainLoop(set_as_default=True)
         self.bus_name = dbus.service.BusName(DBUS_SERVICE, bus=dbus.SystemBus())
         dbus.service.Object.__init__(self, self.bus_name, DBUS_OBJECT_PATH)
+        self.set_state(STATE_STOPPED)
+        self.loop.run()
+
+    def run_subprocess(self):
+        if self.state == STATE_RUNNING:
+            return
 
         cmd = '/usr/bin/env chef-client'
         self.log('Calling subprocess: ' + cmd)
@@ -62,8 +67,6 @@ class DBusService(dbus.service.Object):
         self.set_state(STATE_RUNNING)
 
         GObject.timeout_add_seconds(1, self.check_state)
-
-        self.loop.run()
 
     def check_state(self):
         s = self.process.poll()
@@ -81,6 +84,7 @@ class DBusService(dbus.service.Object):
                 self.log('Output was: ' + str_out)
 
             self.set_state(STATE_FINISHED)
+            self.set_state(STATE_STOPPED)
 
         # Return True for GObject timer to continue,
         # False to stop the timer.
@@ -102,16 +106,16 @@ class DBusService(dbus.service.Object):
         self.log('Setting DBusService state to ' + str_state)
         self.state = state
 
-        if state != STATE_STOPPED:
-            self.StateChanged(self.state)
-
-        if state == STATE_FINISHED:
-            self.stop()
+        self.StateChanged(self.state)
 
     @dbus.service.method(DBUS_SERVICE)
     def stop(self):
         self.log('Stopping the DBusService for org.guadalinex.firstart')
         self.loop.quit()
+
+    @dbus.service.method(DBUS_SERVICE)
+    def user_login(self):
+        self.run_subprocess()
 
     @dbus.service.method(DBUS_SERVICE, out_signature='i')
     def get_state(self):

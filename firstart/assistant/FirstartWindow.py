@@ -67,6 +67,7 @@ class FirstartWindow(Window):
 
         try:
             self.dbusclient.start()
+            self.dbusclient.user_login()
             state = self.dbusclient.get_state(reply_handler=self.reply_handler, error_handler=self.error_handler)
 
         except Exception as e:

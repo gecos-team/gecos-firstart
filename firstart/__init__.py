@@ -27,34 +27,19 @@ def firstboot_is_running():
     # Don't execute this assistant if gecos-firstboot is running
     stdout = subprocess.Popen('/usr/bin/env pgrep firstboot', shell=True, stdout=subprocess.PIPE).stdout
     s_pid = stdout.read().strip()
-    if len(s_pid) > 0:
-        return True
-
-    return False
+    return len(s_pid) > 0
 
 
 def dbusservice():
 
-    if firstboot_is_running():
-        return
+#    if firstboot_is_running():
+#        return
 
     import os
     from dbus.DBusService import DBusService
 
     s = DBusService()
     s.start()
-
-    try:
-        os.unlink('/etc/init/firstart.conf')
-
-    except Exception as e:
-        pass
-
-    try:
-        os.unlink('/etc/dbus-1/system.d/org.guadalinex.firstart.conf')
-
-    except Exception as e:
-        pass
 
 
 def main():
