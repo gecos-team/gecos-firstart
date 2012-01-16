@@ -27,10 +27,7 @@ def firstboot_is_running():
     # Don't execute this assistant if gecos-firstboot is running
     stdout = subprocess.Popen('/usr/bin/env pgrep firstboot', shell=True, stdout=subprocess.PIPE).stdout
     s_pid = stdout.read().strip()
-    if len(s_pid) > 0:
-        return True
-
-    return False
+    return len(s_pid) > 0
 
 
 def dbusservice():
