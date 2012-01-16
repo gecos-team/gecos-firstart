@@ -32,8 +32,8 @@ def firstboot_is_running():
 
 def dbusservice():
 
-    if firstboot_is_running():
-        return
+#    if firstboot_is_running():
+#        return
 
     import os
     from dbus.DBusService import DBusService
