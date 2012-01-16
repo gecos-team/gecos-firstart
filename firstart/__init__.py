@@ -41,18 +41,6 @@ def dbusservice():
     s = DBusService()
     s.start()
 
-    try:
-        os.unlink('/etc/init/firstart.conf')
-
-    except Exception as e:
-        pass
-
-    try:
-        os.unlink('/etc/dbus-1/system.d/org.guadalinex.firstart.conf')
-
-    except Exception as e:
-        pass
-
 
 def main():
 
