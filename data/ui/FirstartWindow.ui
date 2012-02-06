@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires FirstartWindow_ctl 1.0 -->
   <requires lib="gtk+" version="2.24"/>
+  <!-- interface-requires FirstartWindow_ctl 1.0 -->
   <object class="FirstartWindow" id="FirstartWindow">
-    <property name="width_request">1000</property>
-    <property name="height_request">700</property>
     <property name="can_focus">False</property>
     <property name="border_width">10</property>
-    <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="decorated">False</property>
@@ -19,7 +16,6 @@
         <property name="can_focus">False</property>
         <child>
           <object class="GtkScrolledWindow" id="scContent">
-            <property name="height_request">600</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="shadow_type">in</property>
@@ -112,7 +108,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="padding">10</property>
             <property name="position">1</property>

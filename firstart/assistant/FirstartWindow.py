@@ -28,6 +28,7 @@ from firstart.dbus.DBusClient import DBusClient
 import firstart_lib.config as config
 from SessionManager import SessionManager
 import time
+import math
 
 import gettext
 from gettext import gettext as _
@@ -51,12 +52,13 @@ class FirstartWindow(Window):
         iconfile = config.get_data_file('media', '%s' % ('wizard1.png',))
         self.set_icon_from_file(iconfile)
 
+        screen = Gdk.Screen.get_default()
+        sw = math.floor(screen.width() - screen.width() / 8)
+        sh = math.floor(screen.height() - screen.height() / 9)
+        self.resize(sw, sh)
+
         self.ui.btnTest.set_visible(False)
         self.ui.btnClose.set_sensitive(False)
-
-        #self.maximize()
-        self.resize(1000, 700)
-        #self.fullscreen()
 
         self.sm = SessionManager('gecos-firstart')
         self.sm.start()
