@@ -11,3 +11,4 @@ firstart/dbus/DBusService.py
 firstart/__init__.py
 firstart/assistant/FirstartWindow.py
 firstart/assistant/__init__.py
+firstart/assistant/SessionManager.py
