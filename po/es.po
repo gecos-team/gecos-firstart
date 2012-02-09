@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-11 17:20+0100\n"
+"POT-Creation-Date: 2012-02-09 11:59+0100\n"
 "PO-Revision-Date: 2012-01-03 13:44+0100\n"
 "Last-Translator: AHernandez <ahernandez@emergya.com>\n"
 "Language-Team: Spanish\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../firstart/assistant/FirstartWindow.py:83
+#: ../firstart/assistant/FirstartWindow.py:93
 msgid "Guadalinex GECOS Guide"
 msgstr "Guía de Guadalinex GECOS"
 
-#: ../firstart/assistant/FirstartWindow.py:85
-msgid "Please, wait while your system is being configured ..."
-msgstr "Por favor, espere mientras se configura su sistema..."
-
-#: ../firstart/assistant/FirstartWindow.py:86
+#: ../firstart/assistant/FirstartWindow.py:94
 msgid "Test"
 msgstr "Test"
 
-#: ../firstart/assistant/FirstartWindow.py:87
+#: ../firstart/assistant/FirstartWindow.py:95
 msgid "Close"
 msgstr "Cerrar"
 
-#: ../firstart/assistant/FirstartWindow.py:121
+#: ../firstart/assistant/FirstartWindow.py:131
+msgid "Please, wait while your system is being configured ..."
+msgstr "Por favor, espere mientras se configura su sistema..."
+
+#: ../firstart/assistant/FirstartWindow.py:136
 msgid "Your system has been configured."
 msgstr "Su sistema se ha configurado."
 

@@ -49,6 +49,9 @@ class FirstartWindow(Window):
 
     def finish_initializing(self, builder):   # pylint: disable=E1002
 
+        self.sm = SessionManager('gecos-firstart')
+        self.sm.start()
+
         iconfile = config.get_data_file('media', '%s' % ('wizard1.png',))
         self.set_icon_from_file(iconfile)
 
@@ -58,11 +61,10 @@ class FirstartWindow(Window):
         self.resize(sw, sh)
 
         self.ui.btnTest.set_visible(False)
-        self.ui.btnClose.set_sensitive(False)
+        self.ui.btnTest.set_sensitive(False)
 
-        self.sm = SessionManager('gecos-firstart')
-        self.sm.start()
         self.show_browser()
+        self.block()
 
         self.dbusclient = DBusClient()
         self.dbusclient.connect('state-changed', self.on_dbusclient_state_changed)
@@ -78,7 +80,6 @@ class FirstartWindow(Window):
     def show_browser(self):
         self.webview = webkit.WebView()
         self.ui.scContent.add(self.webview)
-        self.webview.load_uri(GECOS_BLOCKED_URI)
         self.webview.show()
 
     def reply_handler(self, state):
@@ -90,8 +91,6 @@ class FirstartWindow(Window):
 
     def translate(self):
         self.set_title(_('Guadalinex GECOS Guide'))
-        #self.ui.lblInfo.set_label(_('You can take a look to the GECOS guide while your system is being configured ...'))
-        self.ui.lblInfo.set_label(_('Please, wait while your system is being configured ...'))
         self.ui.btnTest.set_label(_('Test'))
         self.ui.btnClose.set_label(_('Close'))
 
@@ -100,9 +99,8 @@ class FirstartWindow(Window):
         return False
 
     def on_btnTest_clicked(self, widget):
-        self.sm.stop()
-        self.ungrab()
-        self.destroy()
+        self.block()
+        self.dbusclient.user_login()
 
     def on_btnClose_clicked(self, widget):
         self.sm.stop()
@@ -126,6 +124,11 @@ class FirstartWindow(Window):
 
         elif state == DBC_STATE_FINISHED:
             self.unblock()
+
+    def block(self):
+        self.webview.load_uri(GECOS_BLOCKED_URI)
+        self.ui.btnClose.set_sensitive(False)
+        self.ui.lblInfo.set_label(_('Please, wait while your system is being configured ...'))
 
     def unblock(self):
         self.webview.load_uri(GECOS_UNBLOCKED_URI)
