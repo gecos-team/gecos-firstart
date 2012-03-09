@@ -58,7 +58,12 @@ class DBusService(dbus.service.Object):
     def run_subprocess(self):
         if self.state == STATE_RUNNING:
             return
-
+        
+        cmd_check = 'pgrep chef-client'
+        self.log('Checking if wait for another instance of chef-client')
+        args = shlex.split(cmd_check)
+        while (subprocess.call(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0):
+           next
         cmd = '/usr/bin/env chef-client'
         self.log('Calling subprocess: ' + cmd)
         args = shlex.split(cmd)
