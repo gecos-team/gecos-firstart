@@ -28,6 +28,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 import shlex
 import subprocess
 import syslog
+import time
 
 
 DBUS_SERVICE = 'org.guadalinex.firstart'
@@ -59,17 +60,19 @@ class DBusService(dbus.service.Object):
         if self.state == STATE_RUNNING:
             return
         
+        self.set_state(STATE_RUNNING)
         cmd_check = 'pgrep chef-client'
-        self.log('Checking if wait for another instance of chef-client')
+        self.log('Checking for an already running chef-client instance...')
         args = shlex.split(cmd_check)
-        while (subprocess.call(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0):
-           next
+        while True:
+           if subprocess.Popen(args) == 0:
+              time.sleep(1)
+           else:
+              break
         cmd = '/usr/bin/env chef-client'
         self.log('Calling subprocess: ' + cmd)
         args = shlex.split(cmd)
-        self.process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-        self.set_state(STATE_RUNNING)
+        self.process = subprocess.Popen(args)
 
         GObject.timeout_add_seconds(1, self.check_state)
 
@@ -83,10 +86,10 @@ class DBusService(dbus.service.Object):
                 self.log('The subprocess finished with exit code 0')
 
             else:
-                (out, err) = self.process.communicate()
-                str_out = out.strip() + err.strip()
+                #(out, err) = self.process.communicate()
+                #str_out = out.strip() + err.strip()
                 self.log('The subprocess finished with exit code ' + str(s))
-                self.log('Output was: ' + str_out)
+                #self.log('Output was: ' + str_out)
 
             self.set_state(STATE_FINISHED)
             self.set_state(STATE_STOPPED)
